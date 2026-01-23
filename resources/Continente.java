@@ -2,8 +2,9 @@ package Osservatorio.resources;
 
 public enum Continente {
     AFRICA,
-    AMERICA,
+    NORTHAMERICA,
+    SOUTHAMERICA,
     ASIA,
-    AUSTRALIA,
-    EUROPA
+    EUROPE,
+    OCEANIA
 }
