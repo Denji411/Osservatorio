@@ -54,10 +54,12 @@ public final class GestioneDati {
         stati.stream()
             .collect(Collectors.groupingBy(
                 Stato::getContinente,
-                Collectors.maxBy(Stato::getEconomia)
+                Collectors.maxBy(Comparator.comparing(Stato::getEconomia))
             ))
-            .forEach(e ->
-                System.out.println(e.getKey() + ": " +e.getValue());
+            .forEach((continente, statoOpt) ->
+                statoOpt.ifPresent(stato ->
+                    System.out.println(continente + ": " + stato)
+                )
             );
     }
 }

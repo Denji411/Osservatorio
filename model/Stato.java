@@ -3,14 +3,23 @@ package Osservatorio.model;
 import Osservatorio.resources.Continente;
 
 public class Stato {
-    long economia;
-    Continente continente;
+    private long economia;
+    private Continente continente;
+
 
     public long getEconomia() {
-        return economia;
+        return this.economia;
+    }
+
+    public void setEconomia(long economia) {
+        this.economia = economia;
     }
 
     public Continente getContinente() {
-        return continente;
+        return this.continente;
+    }
+
+    public void setContinente(Continente continente) {
+        this.continente = continente;
     }
 }
