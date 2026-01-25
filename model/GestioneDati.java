@@ -81,4 +81,17 @@ public final class GestioneDati {
 
             System.out.println();
     }
+
+    public static void top10StatiPerEconomia() {
+        System.out.println("=== Top 10 Stati Più Ricchi ===");
+
+        stati.stream()
+            .sorted(Comparator.comparing(Stato::getEconomia))
+            .limit(10)
+            .forEach(s ->
+                System.out.println(s + ": " + s.getEconomia())
+            );
+
+        System.out.println();
+    }
 }
