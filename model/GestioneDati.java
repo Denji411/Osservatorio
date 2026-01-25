@@ -61,5 +61,24 @@ public final class GestioneDati {
                     System.out.println(continente + ": " + stato)
                 )
             );
+
+        System.out.println();
+    }
+
+    public static void minPerContinente() {
+        System.out.println("=== Stati Più Poveri Per Continente ===");
+
+        stati.stream()
+            .collect(Collectors.groupingBy(
+                Stato::getContinente,
+                Collectors.minBy(Comparator.comparing(Stato::getEconomia))
+            ))
+            .forEach((continente, statoOpt) ->
+                statoOpt.ifPresent(stato ->
+                    System.out.println(continente + ": " + stato)
+                )
+            );
+
+            System.out.println();
     }
 }
