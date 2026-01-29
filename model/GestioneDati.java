@@ -42,7 +42,7 @@ public final class GestioneDati {
         try{
             return Integer.parseInt(rank);
         }catch(IllegalArgumentException e){
-            log.warn("Rank non valido!");
+            log.warn("Rank non valido");
             return 0;
         }
     }
@@ -60,7 +60,7 @@ public final class GestioneDati {
         try{
             return Continente.valueOf(s.toUpperCase());
         }catch(IllegalArgumentException e){
-            log.warn("Continente non valido" );
+            log.warn("Continente non valido");
             return null;
         }
     }
