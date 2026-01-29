@@ -6,42 +6,63 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
-
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class GestioneDati {
+    private static final Logger log = LoggerFactory.getLogger(GestioneDati.class);
     private static LinkedList<Stato> stati = new LinkedList<>();
     private static LinkedList<Stato> scarti = new LinkedList<>();
 
     public static void leggiFile () {
         try {
-            List<String> righe = Files.readAllLines(Path.of("prestazioni.csv"));
+            List<String> righe = Files.readAllLines(Path.of("Osservatorio.csv"));
             
             for (int i = 1; i < righe.size(); i++) {
                 String riga = righe.get(i);
-                
-                Stato p = new Stato(riga);
-                if (p.isValido()) {
-                    valide.add(p);
+                log.info("Riga Letta");
+
+                Stato s = new Stato(riga);
+                log.info("Creato Oggetto Stato")
+                if (s.isValido()) {
+                    valide.add(s);
+                    log.info("Aggiunto in Validi");
                 } else {
-                    scarti.add(p);
+                    scarti.add(s);
+                    log.info("Aggiunto in Scarti");
                 }
             }
         } catch (IOException e){
-            e.getMessage();
+            log.error("Errore di Lettura file csv");
         }
     }
 
+    
     public static int parseRank(String rank) {
-        return Integer.parseInt(rank);
+        try{
+            return Integer.parseInt(rank);
+        }catch(IllegalArgumentException e){
+            log.warn("Rank non valido!");
+            return 0;
+        }
     }
 
-    public static long parseEconomy(String economy) {
-        return Long.parseLong(economy);
+    public static long parseEconomy(String gdp) {
+        try{
+        return Long.parseLong(gdp);
+        }catch(IllegalArgumentException e){
+            log.warn("GDP non valido");
+            return -1;
+        }
     }
 
     public static Continente parseContinente(String s) {
-        return Continente.valueOf(s.toUpperCase());
+        try{
+            return Continente.valueOf(s.toUpperCase());
+        }catch(IllegalArgumentException e){
+            log.warn("Continente non valido" );
+            return null;
+        }
     }
 
     public static void statiPerContinente() {
