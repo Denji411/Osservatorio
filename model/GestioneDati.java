@@ -1,11 +1,48 @@
 package Osservatorio.model;
 
+import Osservatorio.resources.Continente;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
+
+
 
 public final class GestioneDati {
     private static LinkedList<Stato> stati = new LinkedList<>();
     private static LinkedList<Stato> scarti = new LinkedList<>();
+
+    public static void leggiFile () {
+        try {
+            List<String> righe = Files.readAllLines(Path.of("prestazioni.csv"));
+            
+            for (int i = 1; i < righe.size(); i++) {
+                String riga = righe.get(i);
+                
+                Stato p = new Stato(riga);
+                if (p.isValido()) {
+                    valide.add(p);
+                } else {
+                    scarti.add(p);
+                }
+            }
+        } catch (IOException e){
+            e.getMessage();
+        }
+    }
+
+    public static int parseRank(String rank) {
+        return Integer.parseInt(rank);
+    }
+
+    public static long parseEconomy(String economy) {
+        return Long.parseLong(economy);
+    }
+
+    public static Continente parseContinente(String s) {
+        return Continente.valueOf(s.toUpperCase());
+    }
 
     public static void statiPerContinente() {
         System.out.println("=== Stati Validati Per Continente ===");
