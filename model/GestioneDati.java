@@ -54,10 +54,52 @@ public final class GestioneDati {
         stati.stream()
             .collect(Collectors.groupingBy(
                 Stato::getContinente,
+<<<<<<< HEAD
                 Collectors.maxBy(Stato::getEconomia)
             ))
             .forEach(e ->
                 System.out.println(e.getKey() + ": " +e.getValue());
             );
+=======
+                Collectors.maxBy(Comparator.comparing(Stato::getEconomia))
+            ))
+            .forEach((continente, statoOpt) ->
+                statoOpt.ifPresent(stato ->
+                    System.out.println(continente + ": " + stato)
+                )
+            );
+
+        System.out.println();
+    }
+
+    public static void minPerContinente() {
+        System.out.println("=== Stati Più Poveri Per Continente ===");
+
+        stati.stream()
+            .collect(Collectors.groupingBy(
+                Stato::getContinente,
+                Collectors.minBy(Comparator.comparing(Stato::getEconomia))
+            ))
+            .forEach((continente, statoOpt) ->
+                statoOpt.ifPresent(stato ->
+                    System.out.println(continente + ": " + stato)
+                )
+            );
+
+            System.out.println();
+    }
+
+    public static void top10StatiPerEconomia() {
+        System.out.println("=== Top 10 Stati Più Ricchi ===");
+
+        stati.stream()
+            .sorted(Comparator.comparing(Stato::getEconomia))
+            .limit(10)
+            .forEach(s ->
+                System.out.println(s + ": " + s.getEconomia())
+            );
+
+        System.out.println();
+>>>>>>> 9a8086e8beeaf8184c01ba757402d93cc9c04e8b
     }
 }
