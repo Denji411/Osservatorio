@@ -1,0 +1,8 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "Osservatorio/lib/logback-classic-1.5.25.jar",
+        "Osservatorio/lib/logback-core-1.5.25.jar",
+        "Osservatorio/lib/slf4j-api-2.0.17.jar"
+    ]
+}

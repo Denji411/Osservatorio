@@ -1,6 +1,5 @@
-package Osservatorio.model;
+package Osservatorio.src.model;
 
-import Osservatorio.resources.Continente;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,6 +7,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import Osservatorio.src.model.Stato;
+import Osservatorio.src.resources.Continente;
 
 public final class GestioneDati {
     private static final Logger log = LoggerFactory.getLogger(GestioneDati.class);
@@ -22,10 +24,19 @@ public final class GestioneDati {
                 String riga = righe.get(i);
                 log.info("Riga Letta");
 
-                Stato s = new Stato(riga);
-                log.info("Creato Oggetto Stato")
+                String[] dati = riga.split(",");
+                log.info("Riga Divisa in Dati");
+
+                Stato s = new Stato(dati[0], 
+                                    parseRank(dati[1]), 
+                                    dati[2], 
+                                    parseEconomy(dati[3]), 
+                                    parseContinente(dati[4]));
+
+                log.info("Creato Oggetto Stato");
+
                 if (s.isValido()) {
-                    valide.add(s);
+                    stati.add(s);
                     log.info("Aggiunto in Validi");
                 } else {
                     scarti.add(s);
@@ -41,7 +52,7 @@ public final class GestioneDati {
     public static int parseRank(String rank) {
         try{
             return Integer.parseInt(rank);
-        }catch(IllegalArgumentException e){
+        }catch(NumberFormatException e){
             log.warn("Rank non valido");
             return 0;
         }
@@ -50,7 +61,7 @@ public final class GestioneDati {
     public static long parseEconomy(String gdp) {
         try{
         return Long.parseLong(gdp);
-        }catch(IllegalArgumentException e){
+        }catch(NumberFormatException e){
             log.warn("GDP non valido");
             return -1;
         }
@@ -144,7 +155,7 @@ public final class GestioneDati {
         System.out.println("=== Top 10 Stati Più Ricchi ===");
 
         stati.stream()
-            .sorted(Comparator.comparing(Stato::getEconomia))
+            .sorted(Comparator.comparing(Stato::getEconomia).reversed())
             .limit(10)
             .forEach(s ->
                 System.out.println(s + ": " + s.getEconomia())
