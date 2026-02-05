@@ -1,11 +1,69 @@
 package Osservatorio.model;
 
+import Osservatorio.resources.Continente;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class GestioneDati {
+    private static final Logger log = LoggerFactory.getLogger(GestioneDati.class);
     private static LinkedList<Stato> stati = new LinkedList<>();
     private static LinkedList<Stato> scarti = new LinkedList<>();
+
+    public static void leggiFile () {
+        try {
+            List<String> righe = Files.readAllLines(Path.of("Osservatorio.csv"));
+            
+            for (int i = 1; i < righe.size(); i++) {
+                String riga = righe.get(i);
+                log.info("Riga Letta");
+
+                Stato s = new Stato(riga);
+                log.info("Creato Oggetto Stato")
+                if (s.isValido()) {
+                    valide.add(s);
+                    log.info("Aggiunto in Validi");
+                } else {
+                    scarti.add(s);
+                    log.info("Aggiunto in Scarti");
+                }
+            }
+        } catch (IOException e){
+            log.error("Errore di Lettura file csv");
+        }
+    }
+
+    
+    public static int parseRank(String rank) {
+        try{
+            return Integer.parseInt(rank);
+        }catch(IllegalArgumentException e){
+            log.warn("Rank non valido");
+            return 0;
+        }
+    }
+
+    public static long parseEconomy(String gdp) {
+        try{
+        return Long.parseLong(gdp);
+        }catch(IllegalArgumentException e){
+            log.warn("GDP non valido");
+            return -1;
+        }
+    }
+
+    public static Continente parseContinente(String s) {
+        try{
+            return Continente.valueOf(s.toUpperCase());
+        }catch(IllegalArgumentException e){
+            log.warn("Continente non valido");
+            return null;
+        }
+    }
 
     public static void statiPerContinente() {
         System.out.println("=== Stati Validati Per Continente ===");
