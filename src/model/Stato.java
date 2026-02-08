@@ -1,6 +1,6 @@
-package Osservatorio.src.model;
+package model;
 
-import Osservatorio.src.resources.*;
+import resources.Continente;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

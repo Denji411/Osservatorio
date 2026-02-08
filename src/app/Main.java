@@ -1,6 +1,6 @@
-package Osservatorio.src.app;
+package app;
 
-import Osservatorio.src.model.GestioneDati;
+import model.GestioneDati;
 
 public class Main {
 

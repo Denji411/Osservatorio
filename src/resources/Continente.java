@@ -1,4 +1,4 @@
-package Osservatorio.src.resources;
+package resources;
 
 public enum Continente {
     AFRICA,

@@ -1,4 +1,4 @@
-package Osservatorio.src.model;
+package model;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import Osservatorio.src.model.Stato;
-import Osservatorio.src.resources.Continente;
+import model.Stato;
+import resources.Continente;
 
 public final class GestioneDati {
     private static final Logger log = LoggerFactory.getLogger(GestioneDati.class);
@@ -17,8 +17,9 @@ public final class GestioneDati {
     private static LinkedList<Stato> scarti = new LinkedList<>();
 
     public static void leggiFile () {
+        Path p = Path.of("Osservatorio.csv");
         try {
-            List<String> righe = Files.readAllLines(Path.of("Osservatorio.csv"));
+            List<String> righe = Files.readAllLines(p);
             
             for (int i = 1; i < righe.size(); i++) {
                 String riga = righe.get(i);
@@ -26,6 +27,10 @@ public final class GestioneDati {
 
                 String[] dati = riga.split(",");
                 log.info("Riga Divisa in Dati");
+
+                if (dati.length != 5) {
+                    log.warn("Numero di Dati Non Valido");
+                }
 
                 Stato s = new Stato(dati[0], 
                                     parseRank(dati[1]), 
@@ -53,25 +58,22 @@ public final class GestioneDati {
         try{
             return Integer.parseInt(rank);
         }catch(NumberFormatException e){
-            log.warn("Rank non valido");
             return 0;
         }
     }
 
     public static long parseEconomy(String gdp) {
         try{
-        return Long.parseLong(gdp);
+            return Long.parseLong(gdp);
         }catch(NumberFormatException e){
-            log.warn("GDP non valido");
             return -1;
         }
     }
 
     public static Continente parseContinente(String s) {
         try{
-            return Continente.valueOf(s.toUpperCase());
+            return Continente.valueOf(s.trim().toUpperCase());
         }catch(IllegalArgumentException e){
-            log.warn("Continente non valido");
             return null;
         }
     }
