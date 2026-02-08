@@ -71,8 +71,11 @@ public final class GestioneDati {
     }
 
     public static Continente parseContinente(String s) {
+        if (s == null) {
+            return null;
+        }
         try{
-            return Continente.valueOf(s.trim().toUpperCase());
+            return Continente.valueOf(s.trim().toUpperCase().replace(" ", "_"));
         }catch(IllegalArgumentException e){
             return null;
         }
@@ -160,7 +163,7 @@ public final class GestioneDati {
             .sorted(Comparator.comparing(Stato::getEconomia).reversed())
             .limit(10)
             .forEach(s ->
-                System.out.println(s + ": " + s.getEconomia())
+                System.out.println(s)
             );
 
         System.out.println();

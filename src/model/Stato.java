@@ -101,7 +101,6 @@ public class Stato {
     }
 
     @Override
-
     public boolean equals(Object o) {
         if (o instanceof Stato altro) {
             return this.code.equals(altro.code);
@@ -109,10 +108,15 @@ public class Stato {
         return false;
     }
 
-        @Override
+    @Override
     public int hashCode() {
         int risultato = 17;
         risultato = risultato * 31 + code.hashCode();
         return risultato; 
+    }
+
+    @Override
+    public String toString() {
+        return nome + " - " + economia;
     }
 }
